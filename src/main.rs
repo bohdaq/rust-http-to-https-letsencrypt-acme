@@ -1,3 +1,5 @@
+pub mod app;
+
 extern crate core;
 
 
