@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 rust-web-server = "5.0.0"
+rcgen = "0.10.0"
+openssl = { version="0.10.42", features = ["vendored"] }
+
