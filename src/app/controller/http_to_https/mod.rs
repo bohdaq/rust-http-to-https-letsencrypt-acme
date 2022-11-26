@@ -22,7 +22,7 @@ impl HttpToHttpsController {
         let boxed_host = _request.get_header("Host");
         if boxed_host.is_ok() {
             let host = boxed_host.unwrap();
-            let location_header = [ "https://", host ].join("");
+            let location_header = [ "https://", host, "/", _request.request_uri ].join("");
             response.headers.push(
                 Header {
                     name: Header::_LOCATION.to_string(),
