@@ -9,6 +9,8 @@ use rust_web_server::response::{Response, STATUS_CODE_REASON_PHRASE};
 pub struct HttpToHttpsController;
 
 impl HttpToHttpsController {
+    pub const _LETSENCRYPT_REQUEST_URI_PREFIX: &'static str = ".well-known/acme-challenge";
+
 
     pub fn is_matching_request(_request: &Request) -> bool {
         HttpToHttpsController::is_letsencrypt_request_uri(_request.request_uri)
@@ -36,5 +38,6 @@ impl HttpToHttpsController {
 }
 
 fn is_letsencrypt_request_uri(request_uri: &str) -> bool {
-    false
+    let boxed_split = request_uri.split_once(HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
+    return boxed_split.is_some();
 }
