@@ -1,4 +1,4 @@
-# rust-http-to-https-letsencrypt-acme
+# http-to-https-letsencrypt
 
 **http-to-https-letsencrypt** is an application web-server for making permanent redirects from http to https. 
 
