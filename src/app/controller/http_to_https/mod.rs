@@ -1,19 +1,17 @@
 mod tests;
 
-use file_ext::FileExt;
-use rust_web_server::mime_type::MimeType;
-use rust_web_server::range::Range;
+use rust_web_server::header::Header;
 use rust_web_server::request::Request;
 use rust_web_server::response::{Response, STATUS_CODE_REASON_PHRASE};
 
 pub struct HttpToHttpsController;
 
 impl HttpToHttpsController {
-    pub const _LETSENCRYPT_REQUEST_URI_PREFIX: &'static str = ".well-known/acme-challenge";
+    pub const _LETSENCRYPT_REQUEST_URI_PREFIX: &'static str = "/.well-known/acme-challenge";
 
 
     pub fn is_matching_request(_request: &Request) -> bool {
-        HttpToHttpsController::is_letsencrypt_request_uri(_request.request_uri)
+        HttpToHttpsController::is_letsencrypt_request_uri(&_request.request_uri)
     }
 
     pub fn process_request(_request: &Request, mut response: Response) -> Response {
@@ -21,10 +19,10 @@ impl HttpToHttpsController {
         response.reason_phrase = STATUS_CODE_REASON_PHRASE.n301_moved_permanently.reason_phrase.to_string();
 
 
-        let boxed_host = _request.get_header("Host");
-        if boxed_host.is_ok() {
+        let boxed_host = _request.get_header("Host".to_string());
+        if boxed_host.is_some() {
             let host = boxed_host.unwrap();
-            let location_header = [ "https://", host, "/", _request.request_uri ].join("");
+            let location_header = [ "https://", &host.value, "/", &_request.request_uri ].join("");
             response.headers.push(
                 Header {
                     name: Header::_LOCATION.to_string(),
@@ -35,9 +33,11 @@ impl HttpToHttpsController {
 
         response
     }
+
+    fn is_letsencrypt_request_uri(request_uri: &str) -> bool {
+        println!("{} {}", request_uri, HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
+        let starts_with = request_uri.starts_with(HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
+        return starts_with;
+    }
 }
 
-fn is_letsencrypt_request_uri(request_uri: &str) -> bool {
-    let boxed_split = request_uri.split_once(HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
-    return boxed_split.is_some();
-}
