@@ -1,3 +1,4 @@
+#[cfg(test)]
 mod tests;
 
 use rust_web_server::header::Header;

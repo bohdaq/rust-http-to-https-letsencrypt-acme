@@ -1,5 +1,5 @@
 [package]
-name = "rust-http-to-https-letsencrypt-acme"
+name = "http-to-https-letsencrypt"
 version = "0.1.0"
 edition = "2021"
 
