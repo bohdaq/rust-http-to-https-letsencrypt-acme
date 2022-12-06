@@ -1,10 +1,11 @@
 pub mod app;
+pub mod server;
 
 use std::net::TcpListener;
 use rust_web_server::entry_point::{bootstrap, get_ip_port_thread_count, set_default_values};
-use rust_web_server::server::Server;
 use rust_web_server::symbol::SYMBOL;
 use rust_web_server::thread_pool::ThreadPool;
+use crate::server::Server;
 
 fn main() {
     start();
@@ -18,7 +19,7 @@ pub fn start() {
     const RUST_VERSION: &str = env!("CARGO_PKG_RUST_VERSION");
     const LICENSE: &str = env!("CARGO_PKG_LICENSE");
 
-    println!("HTTP to HTTPS with LetsEncrypt HTTP verification");
+    println!("HTTP to HTTPS with LetsEncrypt HTTP verification server");
     println!("Version:       {}", VERSION);
     println!("Authors:       {}", AUTHORS);
     println!("Repository:    {}", REPOSITORY);
@@ -34,7 +35,7 @@ pub fn start() {
 
 pub fn create_tcp_listener_with_thread_pool(ip: &str, port: i32, thread_count: i32) {
     let bind_addr = [ip, SYMBOL.colon, port.to_string().as_str()].join(SYMBOL.empty_string);
-    println!("Setting up {}...", bind_addr);
+    println!("Setting up http://{}", bind_addr);
 
     let boxed_listener = TcpListener::bind(&bind_addr);
     if boxed_listener.is_err() {
