@@ -1,9 +1,8 @@
 use std::io::prelude::*;
-use std::borrow::Borrow;
+use crate::app::App;
 
 use rust_web_server::request::{METHOD, Request};
 use rust_web_server::response::{Response, STATUS_CODE_REASON_PHRASE};
-use rust_web_server::app::App;
 use rust_web_server::header::Header;
 
 pub struct Server {}
@@ -15,7 +14,7 @@ impl Server {
             eprintln!("unable to read TCP stream {}", boxed_read.err().unwrap());
 
             let raw_response = Server::bad_request_response();
-            let boxed_stream = stream.write(raw_response.borrow());
+            let boxed_stream = stream.write(&raw_response);
             if boxed_stream.is_ok() {
                 stream.flush().unwrap();
             };
@@ -31,7 +30,7 @@ impl Server {
             eprintln!("unable to parse request: {}", boxed_request.err().unwrap());
 
             let raw_response = Server::bad_request_response();
-            let boxed_stream = stream.write(raw_response.borrow());
+            let boxed_stream = stream.write(&raw_response);
             if boxed_stream.is_ok() {
                 stream.flush().unwrap();
             };
@@ -43,7 +42,7 @@ impl Server {
         let (response, request) = App::handle_request(request);
         let raw_response = Response::generate_response(response, request);
 
-        let boxed_stream = stream.write(raw_response.borrow());
+        let boxed_stream = stream.write(&raw_response);
         if boxed_stream.is_ok() {
             stream.flush().unwrap();
         };

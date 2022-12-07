@@ -1,5 +1,7 @@
 pub mod controller;
 
+use rust_web_server::app::controller::not_found::NotFoundController;
+use rust_web_server::app::controller::static_resource::StaticResourceController;
 use rust_web_server::header::Header;
 use rust_web_server::request::Request;
 use rust_web_server::response::{Response, STATUS_CODE_REASON_PHRASE};
@@ -19,6 +21,16 @@ impl App {
 
         if HttpToHttpsController::is_matching_request(&request) {
             response = HttpToHttpsController::process_request(&request, response);
+            return (response, request)
+        }
+
+        if StaticResourceController::is_matching_request(&request) {
+            response = StaticResourceController::process_request(&request, response);
+            return (response, request)
+        }
+
+        if NotFoundController::is_matching_request(&request) {
+            response = NotFoundController::process_request(&request, response);
             return (response, request)
         }
 

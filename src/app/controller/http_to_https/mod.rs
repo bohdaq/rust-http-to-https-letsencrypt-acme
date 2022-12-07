@@ -12,7 +12,7 @@ impl HttpToHttpsController {
 
 
     pub fn is_matching_request(_request: &Request) -> bool {
-        HttpToHttpsController::is_letsencrypt_request_uri(&_request.request_uri)
+        HttpToHttpsController::is_not_letsencrypt_request_uri(&_request.request_uri)
     }
 
     pub fn process_request(_request: &Request, mut response: Response) -> Response {
@@ -23,7 +23,7 @@ impl HttpToHttpsController {
         let boxed_host = _request.get_header("Host".to_string());
         if boxed_host.is_some() {
             let host = boxed_host.unwrap();
-            let location_header = [ "https://", &host.value, "/", &_request.request_uri ].join("");
+            let location_header = [ "https://", &host.value, &_request.request_uri ].join("");
             response.headers.push(
                 Header {
                     name: Header::_LOCATION.to_string(),
@@ -35,10 +35,10 @@ impl HttpToHttpsController {
         response
     }
 
-    fn is_letsencrypt_request_uri(request_uri: &str) -> bool {
+    fn is_not_letsencrypt_request_uri(request_uri: &str) -> bool {
         println!("{} {}", request_uri, HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
         let starts_with = request_uri.starts_with(HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
-        return starts_with;
+        return !starts_with;
     }
 }
 
