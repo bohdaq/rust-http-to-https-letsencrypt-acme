@@ -1,13 +1,15 @@
 use std::io::prelude::*;
+use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener, TcpStream};
 use crate::app::App;
 
 use rust_web_server::request::{METHOD, Request};
 use rust_web_server::response::{Response, STATUS_CODE_REASON_PHRASE};
 use rust_web_server::header::Header;
+use crate::log::Log;
 
 pub struct Server {}
 impl Server {
-    pub fn process_request(mut stream: impl Read + Write + Unpin) -> Vec<u8> {
+    pub fn process_request(mut stream: TcpStream) -> Vec<u8> {
         let mut buffer :[u8; 1024] = [0; 1024];
         let boxed_read = stream.read(&mut buffer);
         if boxed_read.is_err() {
@@ -40,6 +42,18 @@ impl Server {
 
         let request: Request = boxed_request.unwrap();
         let (response, request) = App::handle_request(request);
+
+        let mut peer_addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0,0,0,0)), 0);
+        let boxed_peer_addr = stream.peer_addr();
+        if boxed_peer_addr.is_ok() {
+            peer_addr = boxed_peer_addr.unwrap()
+        } else {
+            eprintln!("\nunable to read peer addr");
+        }
+
+        let log_request_response = Log::request_response(&request, &response, &peer_addr);
+        println!("{}", log_request_response);
+
         let raw_response = Response::generate_response(response, request);
 
         let boxed_stream = stream.write(&raw_response);

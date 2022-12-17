@@ -73,8 +73,8 @@ impl Log {
         log
     }
 
-    pub fn info() -> String {
-        let mut log = "Rust TLS Server\n".to_string();
+    pub fn info(name: &str) -> String {
+        let mut log = format!("{}\n", name).to_string();
         const VERSION: &str = env!("CARGO_PKG_VERSION");
         const AUTHORS: &str = env!("CARGO_PKG_AUTHORS");
         const REPOSITORY: &str = env!("CARGO_PKG_REPOSITORY");
@@ -97,7 +97,7 @@ impl Log {
         let rust_version = format!("Rust Version:  {}\n", RUST_VERSION);
         log = [log, rust_version].join("");
 
-        let license = format!("License:  {}", LICENSE);
+        let license = format!("License:       {}\n", LICENSE);
         log = [log, license].join("");
 
         log

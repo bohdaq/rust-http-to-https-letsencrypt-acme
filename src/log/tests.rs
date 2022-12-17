@@ -24,7 +24,7 @@ fn log_request_response() {
     let (response, request) = App::handle_request(request);
 
     let timestamp = response._get_header(Header::_DATE_UNIX_EPOCH_NANOS.to_string()).unwrap();
-    let expected_log = format!("\n\nRequest (peer address is 0.0.0.0:0):\n  HTTP/1.1 GET /script.js  \n  Host: 127.0.0.1:7878\n  User-Agent: SOME USER AGENT\n  Accept: */*\n  Accept-Language: en-US,en;q=0.5\n  Accept-Encoding: gzip, deflate, br\n  Referer: https://127.0.0.1:7878/\nEnd of Request\nResponse:\n  200 OK \n  Accept-CH: Sec-CH-UA-Arch, Sec-CH-UA-Bitness, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Downlink, ECT, RTT, Save-Data, Device-Memory\n  Vary: Origin, Sec-CH-UA-Arch, Sec-CH-UA-Bitness, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Save-Data, Device-Memory, Upgrade-Insecure-Requests\n  X-Content-Type-Options: nosniff\n  Accept-Ranges: bytes\n  X-Frame-Options: SAMEORIGIN\n  Date-Unix-Epoch-Nanos: {}\n\n  Body: 1 part(s), 271 byte(s) total\nEnd of Response", timestamp.value);
+    let expected_log = format!("\n\nRequest (peer address is 0.0.0.0:0):\n  HTTP/1.1 GET /script.js  \n  Host: 127.0.0.1:7878\n  User-Agent: SOME USER AGENT\n  Accept: */*\n  Accept-Language: en-US,en;q=0.5\n  Accept-Encoding: gzip, deflate, br\n  Referer: https://127.0.0.1:7878/\nEnd of Request\nResponse:\n  301 Moved Permanently \n  Accept-CH: Sec-CH-UA-Arch, Sec-CH-UA-Bitness, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Downlink, ECT, RTT, Save-Data, Device-Memory\n  Vary: Origin, Sec-CH-UA-Arch, Sec-CH-UA-Bitness, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Save-Data, Device-Memory, Upgrade-Insecure-Requests\n  X-Content-Type-Options: nosniff\n  Accept-Ranges: bytes\n  X-Frame-Options: SAMEORIGIN\n  Date-Unix-Epoch-Nanos: {}\n  Location: https://127.0.0.1:7878/script.js\n\n  Body: 0 part(s), 0 byte(s) total\nEnd of Response", timestamp.value);
 
     let peer_addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0,0,0,0)), 0);
     let log = Log::request_response(&request, &response, &peer_addr);
@@ -49,7 +49,7 @@ fn info() {
     const LICENSE: &str = env!("CARGO_PKG_LICENSE");
 
 
-    let expected_info = format!("Rust TLS Server\nVersion:       {}\nAuthors:       {}\nRepository:    {}\nDesciption:    {}\nRust Version:  {}\nLicense:  {}",
+    let expected_info = format!("HTTP to HTTPS with LetsEncrypt HTTP verification server\nVersion:       {}\nAuthors:       {}\nRepository:    {}\nDesciption:    {}\nRust Version:  {}\nLicense:       {}\n",
         VERSION,
         AUTHORS,
         REPOSITORY,
@@ -57,6 +57,6 @@ fn info() {
         RUST_VERSION,
         LICENSE
     ).to_string();
-    let actual_info = Log::info();
+    let actual_info = Log::info("HTTP to HTTPS with LetsEncrypt HTTP verification server");
     assert_eq!(expected_info, actual_info)
 }

@@ -1,10 +1,12 @@
 pub mod app;
 pub mod server;
+pub mod log;
 
 use std::net::TcpListener;
 use rust_web_server::entry_point::{bootstrap, get_ip_port_thread_count, set_default_values};
 use rust_web_server::symbol::SYMBOL;
 use rust_web_server::thread_pool::ThreadPool;
+use crate::log::Log;
 use crate::server::Server;
 
 fn main() {
@@ -12,20 +14,8 @@ fn main() {
 }
 
 pub fn start() {
-    const VERSION: &str = env!("CARGO_PKG_VERSION");
-    const AUTHORS: &str = env!("CARGO_PKG_AUTHORS");
-    const REPOSITORY: &str = env!("CARGO_PKG_REPOSITORY");
-    const DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
-    const RUST_VERSION: &str = env!("CARGO_PKG_RUST_VERSION");
-    const LICENSE: &str = env!("CARGO_PKG_LICENSE");
-
-    println!("HTTP to HTTPS with LetsEncrypt HTTP verification server");
-    println!("Version:       {}", VERSION);
-    println!("Authors:       {}", AUTHORS);
-    println!("Repository:    {}", REPOSITORY);
-    println!("Desciption:    {}", DESCRIPTION);
-    println!("Rust Version:  {}", RUST_VERSION);
-    println!("License:       {}\n\n", LICENSE);
+    let info = Log::info("HTTP to HTTPS with LetsEncrypt HTTP verification server");
+    println!("{}", info);
     println!("RWS Configuration Start: \n");
     set_default_values();
     bootstrap();
@@ -44,7 +34,8 @@ pub fn create_tcp_listener_with_thread_pool(ip: &str, port: i32, thread_count: i
         let listener = boxed_listener.unwrap();
         let pool = ThreadPool::new(thread_count as usize);
 
-        println!("Hello, HTTP to HTTPS with LetsEncrypt HTTP verification server is up and running: http://{}", &bind_addr);
+        let server_url_thread_count = Log::server_url_thread_count("http", &bind_addr, thread_count);
+        println!("{}", server_url_thread_count);
 
         for boxed_stream in listener.incoming() {
             if boxed_stream.is_err() {
