@@ -37,8 +37,7 @@ impl HttpToHttpsController {
 
     fn is_not_letsencrypt_request_uri(request_uri: &str) -> bool {
         println!("{} {}", request_uri, HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
-        let uri = request_uri.chars().filter(|c| !c.is_ascii_control()).collect::<String>();
-        let starts_with = uri.starts_with(HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
+        let starts_with = request_uri.starts_with(HttpToHttpsController::_LETSENCRYPT_REQUEST_URI_PREFIX);
         return !starts_with;
     }
 }

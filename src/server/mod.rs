@@ -1,5 +1,5 @@
 use std::io::prelude::*;
-use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener, TcpStream};
+use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpStream};
 use crate::app::App;
 
 use rust_web_server::request::{METHOD, Request};
