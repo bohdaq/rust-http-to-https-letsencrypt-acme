@@ -12,6 +12,9 @@ and then run [certbot](https://certbot.eff.org/) in _--webroot_ mode alongside.
 ## Development
 Open [DEVELOPER](DEVELOPER.md) for details.
 
+## Configuration
+Open [CONFIGURE](CONFIGURE.md) for details.
+
 ## Community
 Use GitHub discussions, issues and pull requests.
 
