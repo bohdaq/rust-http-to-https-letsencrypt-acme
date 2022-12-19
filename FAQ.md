@@ -31,4 +31,6 @@ Server is running on loopback device. Find out ip address
 of you network device and restart http-to-https-letsencrypt
 using provided ip.
 
-> ifconfig # find ip address
+> ifconfig # find ip address macOS or linux
+> 
+> ipconfig #windows
