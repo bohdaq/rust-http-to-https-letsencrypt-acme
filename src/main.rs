@@ -16,6 +16,8 @@ fn main() {
 pub fn start() {
     let info = Log::info("HTTP to HTTPS with LetsEncrypt HTTP verification server");
     println!("{}", info);
+    let usage = Log::usage_information();
+    println!("{}", usage);
     println!("RWS Configuration Start: \n");
     set_default_values();
     bootstrap();
