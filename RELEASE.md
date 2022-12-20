@@ -31,7 +31,7 @@ There are additional templates for
 
 Here is the list of supported architectures:
 1. x86 64-bit Apple: **x86_64-apple-darwin**
-    1. [Homebrew Formula](https://github.com/bohdaq/homebrew-rust-web-server)
+    1. [Homebrew Formula](https://github.com/bohdaq/homebrew-http-to-https-letsencrypt)
 2. x86 64-bit Linux: **x86_64-unknown-linux-gnu**
    1.  Debian: **[rws create deb package](https://github.com/bohdaq/rws-create-deb)** 
    2.  RPM: **[rws create rpm package](https://github.com/bohdaq/rws-rpm-builder)** 
