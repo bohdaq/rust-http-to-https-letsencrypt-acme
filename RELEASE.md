@@ -36,7 +36,7 @@ Here is the list of supported architectures:
    1.  Debian: **[create package](https://github.com/bohdaq/http-to-https-letsencrypt-create-deb)** 
    2.  RPM: **[create package](https://github.com/bohdaq/http-to-https-letsencrypt-create-rpm)** 
 3. ARM 64-bit Linux: **aarch64_unknown_linux_gnu**
-   1.  Debian: **[rws create deb package](https://github.com/bohdaq/rws-create-deb)**
+   1.  Debian: **[create package](https://github.com/bohdaq/http-to-https-letsencrypt-create-deb)**
 4. x86 64-bit Windows: **x86_64-pc-windows-msvc**
 
 
