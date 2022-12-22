@@ -71,3 +71,9 @@ I have started server on ip=:: but unable to access it via fe80::... address.
 ### Solution
 Try to access the server using IPv4 _inet_ address, from the same interface. Internally your IPv4 address will be converted to IPv6 variant [::ffff:192.168.m.n].
 
+## Problem 9
+I'm not able to connect to server, getting error:
+
+> Failed to connect to 192.168.m.n port x after y ms: Connection refused
+
+Most likely firewall is blocking incoming request, try to stop firewall and retry.
