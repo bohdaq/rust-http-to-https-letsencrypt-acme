@@ -1,6 +1,6 @@
 [package]
 name = "http-to-https-letsencrypt"
-version = "8.0.0"
+version = "8.0.1"
 authors = ["Bohdan Tsap <bohdan.tsap@tutanota.com>"]
 repository = "https://github.com/bohdaq/rust-http-to-https-letsencrypt-acme"
 description = "http-to-https-letsencrypt is an application web-server for making permanent redirects from http to https."
@@ -11,5 +11,5 @@ rust-version = "1.65"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rust-web-server = "8.0.0"
+rust-web-server = "8.0.1"
 file-ext = "8.0.0"

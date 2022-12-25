@@ -5,7 +5,7 @@ use crate::app::App;
 use rust_web_server::request::{METHOD, Request};
 use rust_web_server::response::{Response, STATUS_CODE_REASON_PHRASE};
 use rust_web_server::header::Header;
-use crate::log::Log;
+use rust_web_server::log::Log;
 
 pub struct Server {}
 impl Server {

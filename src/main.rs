@@ -1,12 +1,11 @@
 pub mod app;
 pub mod server;
-pub mod log;
 
 use std::net::TcpListener;
 use rust_web_server::entry_point::{bootstrap, get_ip_port_thread_count, set_default_values};
 use rust_web_server::symbol::SYMBOL;
+use rust_web_server::log::Log;
 use rust_web_server::thread_pool::ThreadPool;
-use crate::log::Log;
 use crate::server::Server;
 
 fn main() {
