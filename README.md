@@ -1,5 +1,10 @@
 # http-to-https-letsencrypt
 
+# Repository moved to [bohdaq/http-to-https-letsencrypt](https://github.com/bohdaq/http-to-https-letsencrypt)
+
+#
+#######
+
 **http-to-https-letsencrypt** is an application web-server for making permanent redirects from http to https. 
 
 It has built in support for Let'sEncrypt HTTP verification. This means that requests starting from
